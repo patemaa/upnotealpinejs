@@ -1,0 +1,42 @@
+<html>
+<head>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body>
+
+<h1 x-data="{ message: 'I ❤️ Alpine' }" x-text="message"></h1>
+
+<div x-data="testUp()">
+    <ul>
+        <template x-for="m, key in messages">
+            <li>
+                <span x-text="m"></span>
+                <span @click="remove(key)">x</span>
+                <span @click="other(key)">y</span>
+            </li>
+        </template>
+    </ul>
+    <input class="border p-2 " type="text" x-model="message" />
+    <button @click="add()">add</button>
+</div>
+</body>
+<script>
+    function testUp() {
+        return {
+            message : 'varsayilan',
+            messages : ['message1', 'message2', 'message3', 'message4', 'message5', 'message6'],
+            add : function() {
+                this.messages.push(this.message);
+            },
+            remove : function(index) {
+                this.messages.splice(index, 1);
+            },
+            other : function(index) {
+                console.log(index);
+                console.log(this.messages[index]);
+            }
+        }
+    }
+</script>
+</html>
