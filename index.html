@@ -1,9 +1,9 @@
-<html>
+<html xmlns:x-on="http://www.w3.org/1999/xhtml">
 <head>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
+<body class="p-5 text-gray-800 bg-gray-200">
 
 <h1 x-data="{ message: 'I ❤️ Alpine' }" x-text="message"></h1>
 
@@ -19,6 +19,12 @@
     </ul>
     <input class="border p-2 " type="text" x-model="message" />
     <button @click="add()">add</button>
+
+    <div x-data="{count: 0}">
+        <button x-on:click="count++" class="border bg-blue-200 px-1 py-1 mt-3">Increment</button>
+        <span x-text="count"></span>
+
+    </div>
 </div>
 </body>
 <script>
