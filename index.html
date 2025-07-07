@@ -33,6 +33,26 @@
     <div x-show="open" @click.outside="ToggleOpen = false">Contents...</div>
 </div>
 
+<div x-data="{
+        search: '',
+        items: ['foo', 'bar', 'baz'],
+        get filteredItems(){
+            return this.items.filter(
+                i => i.startsWith(this.search)
+            )
+        }
+    }"
+>
+    <input x-model="search" placeholder="Search..." class="border bg-gray-200 px-1 py-1 mb-3 rounded"/>
+
+    <ul>
+        <template x-for="item in filteredItems" :key="item">
+            <li x-text="item"></li>
+        </template>
+    </ul>
+
+</div>
+
 </body>
 <script>
     function testUp() {
