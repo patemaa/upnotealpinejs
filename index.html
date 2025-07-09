@@ -98,7 +98,8 @@
     </button>
 </div>
 
-<button x-data="{ open: true }" @click="open = false" x-show="open" class="border border-black bg-blue-200 px-1 py-1 rounded">
+<button x-data="{ open: true }" @click="open = false" x-show="open"
+        class="border border-black bg-blue-200 px-1 py-1 rounded">
     Hide Me
 </button>
 
@@ -152,9 +153,11 @@
 <button x-data @click.once="console.log('I will only log once')">Log once</button>
 <div></div>
 
-<button x-data="{ handleClick() { alert('Tıklandı!') } }" @click.self="handleClick" class="border border-black bg-blue-200 px-1 py-1 rounded">
+<button x-data="{ handleClick() { alert('Tıklandı!') } }" @click.self="handleClick"
+        class="border border-black bg-blue-200 px-1 py-1 rounded">
     Click Me
-    <img class="h-10 w-10" src="https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D">
+    <img class="h-10 w-10"
+         src="https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D">
 </button>
 
 <div x-data="{ username: '' }">
@@ -171,7 +174,7 @@
 </div>
 
 <div x-data="{ label: 'Hello' }" x-effect="console.log(label)">
-    <button @click="label += ' World!'">Change Message</button>
+    <button @click="label += ' World!'" class="border border-black bg-blue-200 px-1 py-1 rounded">Change Message</button>
 </div>
 
 <div x-data="{ label: 'From Alpine' }">
@@ -179,6 +182,84 @@
         <span x-text="label"></span>
     </div>
 </div>
+
+<body>
+<div x-data="{ open: false }">
+    <button @click="open = ! open" class="border border-black bg-blue-200 px-1 py-1 rounded">Toggle Modal</button>
+
+    <template x-teleport="body">
+        <div x-show="open">
+            Modal contents...
+        </div>
+    </template>
+</div>
+
+<div>Some other content placed AFTER the modal markup.</div>
+
+<div x-data="{ open: false }">
+    <button @click="open = ! open" class="border border-black bg-blue-200 px-1 py-1 rounded">Toggle Modal</button>
+
+    <template x-teleport="body" @click="open = false">
+        <div x-show="open">
+            Modal contents...
+            (click to close)
+        </div>
+    </template>
+</div>
+<div x-data="{ open: false }">
+    <button @click="open = ! open" class="border border-black bg-blue-200 px-1 py-1 rounded">Toggle Modal</button>
+
+    <template x-teleport="body">
+        <div x-show="open">
+            Modal contents...
+
+            <div x-data="{ open: false }">
+                <button @click="open = ! open" class="border border-black bg-blue-200 px-1 py-1 rounded">Toggle Nested Modal</button>
+
+                <template x-teleport="body">
+                    <div x-show="open">
+                        Nested modal contents...
+                    </div>
+                </template>
+            </div>
+        </div>
+    </template>
+</div>
+
+<div x-data="{ open: false }" x-init="$watch('open', (value, oldValue) => console.log(value, oldValue))">
+    <button @click="open = ! open" class="border border-black bg-blue-200 px-1 py-1 rounded">Toggle Open</button>
+</div>
+
+<div
+        x-data="{ title: 'Hello' }"
+        @set-title.window="title = $event.detail"
+>
+    <h1 x-text="title"></h1>
+</div>
+
+<div x-data>
+    <button @click="$dispatch('set-title', 'Hello World!')">Click me</button>
+</div>
+
+<div x-data="{ title: 'Hello' }">
+    <span x-model="title">
+        <button @click="$dispatch('input', 'Hello World!')">Click me</button>
+    </span>
+</div>
+<!--calismiyor-->
+
+<div x-data="{ title: 'Ilk' }">
+    <button
+            @click="
+            title = 'Son!';
+            $nextTick(() => { console.log($el.innerText) });
+        "
+            x-text="title"
+    ></button>
+</div>
+
+
+
 
 </body>
 <script>
